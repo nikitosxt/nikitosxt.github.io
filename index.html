@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Felipe Prianti Saxton — Game Programmer</title>
+<meta name="description" content="Portfolio de Felipe Prianti Saxton, Game Programmer: Unity, Unreal Engine 5, GAS, multiplayer e backend em cinco projetos de jogos.">
+<style>img{max-width:100%}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Felipe Saxton</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<!--
+  ============================================================
+  COMO EDITAR ESTA PAGINA
+  ============================================================
+  1. IDIOMA: todo texto existe duas vezes -> <x lang="pt"> e
+     <x lang="en">. Ao editar um, edite o outro.
+
+  2. IMAGENS: ficam na pasta "images", em JPG comprimido.
+     Banner: ate 1600 px de largura. Miniatura: 1100 px.
+     Para trocar, basta sobrescrever o arquivo com o mesmo nome.
+
+  3. VIDEO DO YOUTUBE: <iframe> dentro de <figure class="clip">.
+     O video precisa estar PUBLICO ou NAO LISTADO. Video privado
+     nao toca fora da sua conta.
+
+  4. Falta preencher: o periodo de cada projeto (as linhas foram
+     removidas da ficha tecnica) e o link do Save the Plushies,
+     hoje marcado como "Em breve" (class="soon").
+  ============================================================
+-->
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0C0C12;
+    --bg-2:#15151F;
+    --bg-3:#1C1C28;
+    --hair:#2A2A3A;
+    --hair-2:#1F1F2C;
+    --fg:#FFFFFF;
+    --fg-2:#C9C9D8;
+    --muted:#9A9AB0;
+    --dim:#71718A;
+    --accent:#7C4DFF;        /* violeta cheio: botoes, faixa, play */
+    --accent-soft:#AC8CFF;   /* violeta claro: texto e rotulos */
+    --accent-deep:#4B2BB8;   /* violeta escuro: bordas */
+    --live:#8FE3B4;
+    --rail:190px;
+    --f-sans:"Manrope","Helvetica Neue",Arial,sans-serif;
+    --f-display:"Sora","Helvetica Neue",Arial,sans-serif;
+    --f-serif:"Sora","Helvetica Neue",Arial,sans-serif;
+    --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  }
+
+  /* ---------- troca de idioma ---------- */
+  :root.lang-en [lang="pt"]{display:none !important;}
+  :root:not(.lang-en) [lang="en"]{display:none !important;}
+
+  body{
+    background-color:var(--bg);
+    background-image:
+      radial-gradient(70rem 46rem at 14% -12%,rgba(124,77,255,.38),transparent 60%),
+      radial-gradient(52rem 38rem at 96% 6%,rgba(88,52,200,.22),transparent 58%),
+      radial-gradient(64rem 46rem at 50% 108%,rgba(124,77,255,.16),transparent 62%);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    color:var(--fg);
+    font-family:var(--f-sans);
+    font-size:16.5px;
+    line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px;border-radius:2px;}
+  .wrap{max-width:1140px;margin-inline:auto;padding-inline:clamp(16px,5vw,64px);}
+
+  /* ---------- grade mestre: rotulo | conteudo ---------- */
+  .row{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:clamp(18px,4vw,56px);}
+  .rail{min-width:0;}
+  .label{
+    font-family:var(--f-mono);font-size:10.5px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+    margin:0;padding-top:4px;
+  }
+  .label.sticky,.sub-mark.sticky{position:sticky;top:calc(env(safe-area-inset-top,0px) + 78px);}
+  @media (max-width:880px){
+    .row{grid-template-columns:1fr;gap:14px;}
+    .label.sticky,.sub-mark.sticky{position:static;}
+  }
+
+  /* ---------- barra superior ---------- */
+  .topbar{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
+    background:rgba(25,18,56,.86);backdrop-filter:blur(16px) saturate(150%);
+    border-bottom:1px solid var(--hair-2);
+  }
+  .topbar-in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:15px;}
+  .sig{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--fg);white-space:nowrap;}
+  .sig b{font-weight:500;}
+  .sig em{font-style:normal;color:var(--dim);}
+  .top-right{display:flex;align-items:center;gap:clamp(14px,3vw,30px);}
+  .nav{display:flex;gap:26px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
+  .nav a{color:var(--muted);text-decoration:none;transition:color .18s ease;}
+  .nav a:hover{color:var(--accent-soft);}
+  @media (max-width:980px){.nav{display:none;}}
+  .lang{display:flex;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
+  .lang button{
+    font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;
+    background:none;border:0;color:var(--dim);padding:6px 11px;cursor:pointer;
+    transition:color .18s ease,background .18s ease;
+  }
+  .lang button + button{border-left:1px solid var(--hair);}
+  .lang button:hover{color:var(--fg-2);}
+  .lang button[aria-pressed="true"]{background:rgba(245,190,98,.18);color:var(--accent-soft);}
+
+  /* ---------- hero ---------- */
+  .hero{padding-block:clamp(54px,9vw,104px) clamp(38px,6vw,68px);}
+  .hero .eyebrow{
+    font-family:var(--f-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--accent-soft);margin:0 0 26px;
+  }
+  .hero h1{
+    font-family:var(--f-display);
+    font-weight:800;font-size:clamp(34px,6.8vw,72px);line-height:1.02;
+    letter-spacing:-.02em;text-transform:uppercase;margin:0;text-wrap:balance;
+  }
+  .hero .claim{
+    font-family:var(--f-display);font-weight:600;font-size:clamp(19px,2.7vw,28px);letter-spacing:-.02em;
+    line-height:1.28;margin:20px 0 0;max-width:24ch;color:var(--fg);
+  }
+  .hero .claim em{font-style:normal;font-weight:600;color:var(--accent-soft);}
+  .hero .lead{max-width:56ch;color:var(--fg-2);margin:22px 0 0;}
+  .facts{
+    display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:30px;
+    font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+  }
+  .facts span{border:1px solid var(--hair);border-radius:999px;padding:5px 12px;}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;}
+  .btn{
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+    text-decoration:none;padding:12px 19px;border:1px solid var(--hair);border-radius:2px;color:var(--fg);
+    transition:border-color .18s ease,color .18s ease,background .18s ease;
+  }
+  .btn:hover{border-color:var(--accent-soft);color:var(--accent-soft);}
+  .btn.key{border-color:var(--accent);background:var(--accent);color:#FFFFFF;font-weight:500;}
+  .btn.key:hover{background:#8F66FF;border-color:#8F66FF;color:#FFFFFF;}
+
+  /* ---------- blocos de secao ---------- */
+  .band{padding-block:clamp(38px,5.5vw,66px);border-top:1px solid var(--hair);}
+  h2.sec{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2.8vw,30px);letter-spacing:-.025em;margin:0 0 10px;}
+  .prose{max-width:62ch;color:var(--fg-2);margin:0;font-size:clamp(16.5px,1.5vw,18px);}
+  .prose + .prose{margin-top:14px;}
+
+  /* experiencia e formacao */
+  .entries{display:grid;gap:34px;}
+  .entry h3{font-family:var(--f-display);font-weight:700;font-size:19px;margin:0;letter-spacing:-.02em;}
+  .entry .org{
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--accent-soft);margin:5px 0 12px;display:flex;flex-wrap:wrap;gap:4px 10px;
+  }
+  .entry .org .when{color:var(--dim);}
+  /* nada de marcadores: cada frente de trabalho vira uma linha com rotulo */
+  .entry ul{list-style:none;margin:0;padding:0;display:grid;gap:0;max-width:72ch;}
+  .entry li{
+    display:grid;grid-template-columns:132px minmax(0,1fr);gap:4px 20px;
+    padding:13px 0;border-top:1px solid var(--hair-2);color:var(--fg-2);font-size:15.5px;
+  }
+  .entry li:first-child{border-top:1px solid var(--hair);}
+  .entry li .tag{
+    font-family:var(--f-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent-soft);padding-top:5px;
+  }
+  @media (max-width:640px){
+    .entry li{grid-template-columns:1fr;gap:5px;}
+    .entry li .tag{padding-top:0;}
+  }
+  .entry .note{color:var(--muted);font-size:14.5px;margin:0;max-width:62ch;}
+
+  /* competencias */
+  .stack{display:grid;gap:26px;}
+  .stack-group h3{
+    font-family:var(--f-mono);font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 11px;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chips span{
+    font-family:var(--f-mono);font-size:11.5px;color:var(--fg-2);
+    border:1px solid var(--hair);border-radius:2px;padding:6px 11px;background:rgba(36,27,78,.55);
+  }
+  .sys{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:22px 34px;}
+  .sys div{border-top:1px solid var(--hair);padding-top:13px;}
+  .sys h4{font-size:14.5px;font-weight:600;margin:0 0 4px;}
+  .sys p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.55;}
+
+  /* ---------- projetos: um capitulo com cinco subpartes ---------- */
+  .chapter{
+    border-block:1px solid var(--hair);
+    background:linear-gradient(180deg,rgba(124,77,255,.10),rgba(124,77,255,.03) 38%,transparent 78%);
+  }
+  .chapter-head{padding-block:clamp(48px,7vw,86px) clamp(26px,4vw,40px);}
+  .chapter-eyebrow{
+    font-family:var(--f-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--accent-soft);margin:0 0 14px;
+  }
+  .chapter-title{
+    font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;
+    font-size:clamp(38px,8vw,88px);line-height:.98;margin:0;
+  }
+  .chapter-lead{max-width:56ch;color:var(--fg-2);margin:20px 0 0;font-size:clamp(16.5px,1.5vw,18px);}
+
+  /* indice das subpartes */
+  .pindex{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:0;max-width:760px;}
+  .pindex a{
+    display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:6px 16px;align-items:baseline;
+    text-decoration:none;padding:13px 4px;border-top:1px solid var(--hair-2);
+    transition:background .18s ease,padding-left .18s ease;
+  }
+  .pindex li:first-child a{border-top:1px solid var(--hair);}
+  .pindex a:hover{background:rgba(124,77,255,.10);padding-left:10px;}
+  .pindex .n{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;color:var(--accent-soft);}
+  .pindex .t{font-family:var(--f-display);font-weight:600;font-size:17px;color:var(--fg);letter-spacing:-.015em;}
+  .pindex a:hover .t{color:var(--accent-soft);}
+  .pindex .d{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);}
+  @media (max-width:560px){
+    .pindex a{grid-template-columns:38px minmax(0,1fr);}
+    .pindex .d{grid-column:2;}
+  }
+
+  .chapter-body{padding-bottom:clamp(20px,4vw,40px);}
+  .sub-mark{display:grid;gap:7px;}
+  .sub-mark .n{
+    font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--accent-soft);
+    border-left:2px solid var(--accent);padding-left:9px;line-height:1.1;
+  }
+  .sub-mark .label{padding-top:0;}
+
+  .project{padding-block:clamp(44px,6vw,80px);border-top:1px solid var(--hair-2);}
+  .p-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px 16px;margin-bottom:8px;}
+  .p-head h2{
+    font-family:var(--f-display);font-weight:800;font-size:clamp(26px,3.8vw,42px);
+    letter-spacing:-.03em;text-transform:uppercase;margin:0;line-height:1.05;
+  }
+  .pill{
+    font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--hair);border-radius:999px;padding:4px 11px;white-space:nowrap;
+  }
+  .pill.live{color:var(--live);border-color:rgba(143,227,180,.45);}
+  .pill.jam{color:var(--accent-soft);border-color:var(--accent-deep);}
+  .quote{
+    font-family:var(--f-sans);font-weight:400;font-size:clamp(17.5px,2vw,22px);line-height:1.45;border-left:2px solid var(--accent-deep);padding-left:18px;
+    color:var(--fg);max-width:44ch;margin:0 0 14px;
+  }
+  .pitch{max-width:62ch;color:var(--fg-2);margin:0;font-size:clamp(16.5px,1.5vw,18px);}
+  .pitch b{color:var(--fg);font-weight:600;}
+  .kicker{
+    margin:0 0 16px;max-width:52ch;font-size:clamp(17px,1.9vw,20.5px);line-height:1.45;
+    font-weight:500;color:var(--fg);text-wrap:balance;
+  }
+  .kicker b{color:var(--accent-soft);font-weight:600;}
+
+  /* align-items:start é obrigatório: dentro de um grid o item estica por
+     padrão, ganha altura definida e o aspect-ratio 16/9 deixa de valer */
+  .media{margin-top:26px;display:grid;gap:10px;align-items:start;}
+  .media > *,.thumbs > *,.clip > *{align-self:start;min-width:0;}
+  .shot{
+    aspect-ratio:16/9;width:100%;max-width:100%;border:1px solid var(--hair-2);border-radius:3px;
+    background:
+      radial-gradient(130% 130% at 22% 0%,rgba(167,139,250,.20),transparent 62%),
+      repeating-linear-gradient(90deg,rgba(214,198,255,.05) 0 1px,transparent 1px 42px),
+      rgba(36,27,78,.55);
+    display:grid;place-content:center;justify-items:center;gap:7px;padding:16px;text-align:center;
+    font-family:var(--f-mono);transition:border-color .2s ease;
+  }
+  .shot:hover{border-color:var(--accent-deep);}
+  .shot b{font-size:12px;font-weight:400;color:var(--fg-2);}
+  .shot i{font-style:normal;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
+  img.shot{object-fit:cover;display:block;padding:0;height:auto;aspect-ratio:16/9;}
+  .thumbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;align-items:start;}
+  .thumbs .shot{aspect-ratio:16/9;}
+  .clip{align-items:start;}
+  .poster{aspect-ratio:16/9;}
+  .poster img.shot{width:100%;height:100%;}
+  img.shot.zoomable{cursor:zoom-in;}
+
+  /* ---------- visualizacao ampliada ---------- */
+  .lb{
+    position:fixed;inset:0;z-index:60;display:grid;grid-template-rows:auto 1fr auto;
+    background:rgba(18,13,42,.94);backdrop-filter:blur(14px);
+    padding:calc(env(safe-area-inset-top,0px) + 14px) 14px calc(env(safe-area-inset-bottom,0px) + 16px);
+    gap:12px;
+  }
+  .lb-top{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .lb-count{
+    font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .lb-stage{display:grid;place-items:center;min-height:0;}
+  .lb-stage img{
+    max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+    border:1px solid var(--hair);border-radius:3px;background:var(--bg-2);
+  }
+  .lb-cap{
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--fg-2);
+    text-align:center;min-height:1.2em;
+  }
+  .lb-btn{
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    background:rgba(36,27,78,.85);border:1px solid var(--hair);border-radius:2px;color:var(--fg-2);
+    padding:9px 14px;cursor:pointer;line-height:1;
+    transition:border-color .18s ease,color .18s ease;
+  }
+  .lb-btn:hover{border-color:var(--accent-soft);color:var(--accent-soft);}
+  .lb-nav{display:flex;gap:10px;justify-content:center;}
+  :root.lb-open{overflow:hidden;}
+  @media (max-width:520px){
+    .lb-stage img{border-radius:2px;}
+    .lb-cap{font-size:10px;}
+  }
+  .clip{margin:0;display:grid;gap:7px;}
+  .clip figcaption{
+    font-family:var(--f-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+  }
+  .poster{position:relative;display:block;border-radius:3px;overflow:hidden;line-height:0;}
+  .poster::after{
+    content:"";position:absolute;inset:0;background:rgba(18,13,42,.26);
+    transition:background .25s ease;pointer-events:none;
+  }
+  .poster:hover::after{background:rgba(18,13,42,.08);}
+  .poster .play{
+    position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;z-index:1;
+    display:grid;place-items:center;color:#FFFFFF;background:var(--accent);
+    box-shadow:0 10px 34px rgba(0,0,0,.5);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),background .25s ease;
+  }
+  .poster .play svg{margin-left:2px;}
+  .poster:hover .play{transform:scale(1.09);background:#8F66FF;}
+  .poster:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px;}
+  .embed{aspect-ratio:16/9;border:1px solid var(--hair);border-radius:3px;overflow:hidden;}
+  .embed iframe{width:100%;height:100%;border:0;display:block;}
+
+  .p-foot{margin-top:30px;}
+  .spec{display:grid;gap:0;margin:0;}
+  .spec-row{border-top:1px solid var(--hair-2);padding:9px 0;display:grid;gap:2px;}
+  .spec-row:first-child{border-top:1px solid var(--hair);}
+  .spec dt{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
+  .spec dd{margin:0;font-size:14px;color:var(--fg-2);font-variant-numeric:tabular-nums;}
+  .contrib h3{
+    font-family:var(--f-mono);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--accent-soft);margin:0 0 15px;
+  }
+  .contrib ul{list-style:none;margin:0;padding:0;display:grid;gap:13px;max-width:66ch;}
+  .contrib li{position:relative;padding-left:22px;font-size:16px;color:var(--fg-2);}
+  .contrib li::before{content:"";position:absolute;left:0;top:.58em;width:6px;height:6px;background:var(--accent-soft);transform:rotate(45deg);}
+  .contrib li b{color:var(--fg);font-weight:600;}
+  .links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;}
+  .links a{color:var(--accent-soft);text-decoration:none;border-bottom:1px solid var(--accent-deep);padding-bottom:2px;}
+  .links a:hover{border-bottom-color:var(--accent-soft);}
+  .todo{color:var(--dim);font-family:var(--f-mono);font-size:11.5px;border-bottom:1px dotted var(--hair);}
+  .soon{
+    font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--hair);border-radius:999px;padding:5px 12px;
+  }
+
+  /* ---------- contato ---------- */
+  .contact{border-top:1px solid var(--hair);padding-block:clamp(46px,6vw,80px) clamp(34px,5vw,58px);}
+  .contact h2{
+    font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:-.025em;
+    font-size:clamp(26px,3.8vw,44px);margin:0 0 14px;
+  }
+  .contact p{max-width:54ch;color:var(--fg-2);margin:0;}
+  .fine{
+    font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hair-2);
+  }
+  /* ================= ANIMACOES DE SCROLL =================
+     Feitas com IntersectionObserver + posicao real do elemento,
+     para funcionar em Chrome, Edge, Firefox e Safari. O script
+     so prepara o que esta ABAIXO da dobra: o que ja aparece no
+     primeiro quadro nunca some. Sem JavaScript, a pagina abre
+     completa e estatica.
+     ======================================================= */
+
+  /* barra de progresso da leitura */
+  .progress{
+    position:fixed;top:env(safe-area-inset-top,0px);left:0;z-index:40;
+    height:2px;width:100%;transform:scaleX(0);transform-origin:0 50%;
+    background:linear-gradient(90deg,var(--violet),var(--accent-soft));
+  }
+
+  /* ancoras nao param embaixo da barra fixa */
+  [id]{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 92px);}
+  .nav a.current{color:var(--fg);}
+
+  /* estado de entrada: so existe quando o script assume a pagina */
+  :root.anim-on .rv{
+    opacity:0;transform:translateY(22px);
+    transition:opacity .64s cubic-bezier(.22,.61,.36,1),transform .64s cubic-bezier(.22,.61,.36,1);
+  }
+  :root.anim-on .rv.rv-x{transform:translateX(-18px);}
+  :root.anim-on .rv.rv-s{transform:translateY(10px) scale(.92);}
+  :root.anim-on .rv.rv-title{transform:translateY(28px);}
+  :root.anim-on .rv.rv-shot{transform:translateY(26px) scale(.985);}
+  :root.anim-on .rv.is-in{opacity:1;transform:none;}
+
+  /* fio dourado que se desenha no topo de cada projeto */
+  .project{position:relative;}
+  .project::before{
+    content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,var(--accent-deep),rgba(192,144,64,0) 55%);
+    transform:scaleX(1);transform-origin:0 50%;
+  }
+  :root.anim-on .project::before{transform:scaleX(0);}
+  :root.anim-on .project.is-in::before{
+    transform:scaleX(1);transition:transform 1.1s cubic-bezier(.22,.61,.36,1);
+  }
+
+  /* entrada do topo, ao carregar */
+  @media (prefers-reduced-motion:no-preference){
+    :root{scroll-behavior:smooth;}
+    .hero .eyebrow,.hero h1,.hero .claim,.hero .lead,.hero .facts,.hero .cta{
+      animation:hero-in .6s cubic-bezier(.22,.61,.36,1) both;
+    }
+    .hero h1{animation-delay:.05s;}
+    .hero .claim{animation-delay:.12s;}
+    .hero .lead{animation-delay:.18s;}
+    .hero .facts{animation-delay:.24s;}
+    .hero .cta{animation-delay:.3s;}
+  }
+  @keyframes hero-in{from{opacity:.2;transform:translateY(12px);}to{opacity:1;transform:none;}}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
+</style>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="sig" href="#top"><b>Felipe Saxton</b> <em>/</em> Game Programmer</a>
+    <div class="top-right">
+      <nav class="nav">
+        <a href="#experiencia"><span lang="pt">Experiência</span><span lang="en">Experience</span></a>
+        <a href="#projetos"><span lang="pt">Projetos</span><span lang="en">Projects</span></a>
+        <a href="#competencias"><span lang="pt">Competências</span><span lang="en">Skills</span></a>
+        <a href="#formacao"><span lang="pt">Formação</span><span lang="en">Education</span></a>
+        <a href="#contato"><span lang="pt">Contato</span><span lang="en">Contact</span></a>
+      </nav>
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" id="lang-pt" data-lang-btn="pt" aria-pressed="true">PT</button>
+        <button type="button" id="lang-en" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ===================== HERO ===================== -->
+  <section class="wrap hero">
+   <div class="row">
+    <div class="rail"><p class="label"><span lang="pt">Portfólio</span><span lang="en">Portfolio</span></p></div>
+    <div>
+    <p class="eyebrow">Game Programmer · Unity &amp; Unreal Engine 5</p>
+    <h1>Felipe Prianti Saxton</h1>
+    <p class="claim" lang="pt">Eu construo os sistemas que fazem o jogo <em>responder</em>.</p>
+    <p class="claim" lang="en">I build the systems that make a game <em>respond</em>.</p>
+    <p class="lead" lang="pt">Cinco anos em Unity e Unreal Engine, quase sempre com mais de um jogador na tela.
+      Eu cuido do que acontece depois do clique: a habilidade que dispara, o inimigo que reage e o item que
+      ainda está no inventário na próxima sessão. Cinco projetos abaixo — dois deles na Steam.</p>
+    <p class="lead" lang="en">Five years in Unity and Unreal Engine, almost always with more than one player on
+      screen. I handle what happens after the click: the ability that fires, the enemy that reacts and the item
+      still in your inventory next session. Five projects below — two of them on Steam.</p>
+    <div class="cta">
+      <a class="btn key" href="mailto:felipepsaxton@gmail.com">felipepsaxton@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/felipe-saxton-856857141/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/nikitosxt" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    </div>
+   </div>
+  </section>
+
+  <!-- ===================== PERFIL ===================== -->
+  <section class="wrap band">
+    <div class="row">
+      <div class="rail"><p class="label"><span lang="pt">Perfil</span><span lang="en">Profile</span></p></div>
+      <div>
+        <h2 class="sec" lang="pt">Gameplay que responde, backend que não perde nada</h2>
+        <h2 class="sec" lang="en">Gameplay that responds, a backend that loses nothing</h2>
+        <p class="prose" lang="pt">Minha especialidade é a costura entre as duas pontas: o que o jogador sente
+          na mão e o que precisa sobreviver ao fim da partida. É onde mora a maior parte dos bugs difíceis — e é
+          o trabalho que eu gosto de fazer.</p>
+        <p class="prose" lang="en">My specialty is the seam between two ends: what the player feels in their
+          hands, and what has to survive the end of the match. It's where most of the hard bugs live — and it's
+          the work I enjoy.</p>
+        <p class="prose" lang="pt">Entro bem tanto em projeto novo quanto em código que já existe, e escrevo
+          pensando em quem vai mexer depois. Também atuei como QA Engineer, então trato teste automatizado como
+          parte do sistema, não como etapa extra.</p>
+        <p class="prose" lang="en">I'm comfortable starting from scratch or stepping into an existing codebase,
+          and I write with the next person in mind. I've also worked as a QA Engineer, so I treat automated
+          testing as part of the system, not an extra step.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCIA ===================== -->
+  <section class="wrap band" id="experiencia">
+    <div class="row">
+      <div class="rail"><p class="label sticky"><span lang="pt">Experiência</span><span lang="en">Experience</span></p></div>
+      <div class="entries">
+
+        <article class="entry">
+          <h3>Game Programmer</h3>
+          <p class="org">SL Games <span class="when">11/2024 — <span lang="pt">atual</span><span lang="en">present</span></span></p>
+          <ul lang="pt">
+            <li><span class="tag">Backend</span><span>Unreal Engine 5 integrado ao Firebase para o banco de
+              dados de jogadores e o controle de servidor.</span></li>
+            <li><span class="tag">Sistemas</span><span>Inventário em grade e progressão completa de personagem:
+              experiência, níveis, habilidades e atributos.</span></li>
+            <li><span class="tag">Arquitetura</span><span>Escalabilidade, suporte a multiplayer e código que o
+              time consegue manter.</span></li>
+            <li><span class="tag">QA</span><span>Testes automatizados de backend e de sistemas em engine, além
+              das pipelines de teste de build.</span></li>
+          </ul>
+          <ul lang="en">
+            <li><span class="tag">Backend</span><span>Unreal Engine 5 integrated with Firebase for the player
+              database and server control.</span></li>
+            <li><span class="tag">Systems</span><span>Grid-based inventory and full character progression:
+              experience, levels, skills and attributes.</span></li>
+            <li><span class="tag">Architecture</span><span>Scalability, multiplayer support and code the team
+              can maintain.</span></li>
+            <li><span class="tag">QA</span><span>Automated tests for backend and in-engine systems, plus the
+              build test pipelines.</span></li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <h3>Game Programmer</h3>
+          <p class="org">Phyrexi <span class="when">08/2022 — 10/2024</span></p>
+          <ul lang="pt">
+            <li><span class="tag">Multiplayer</span><span>Jogos em Unity com Netcode, Photon e Quantum, para
+              Mobile, PC e WebGL.</span></li>
+            <li><span class="tag">Unreal</span><span>Especialização em Gameplay Ability System, o sistema que
+              sustenta habilidades e efeitos.</span></li>
+            <li><span class="tag">Online</span><span>Features multiplayer conectadas ao Firebase para
+              autenticação, armazenamento e dados em tempo real.</span></li>
+          </ul>
+          <ul lang="en">
+            <li><span class="tag">Multiplayer</span><span>Unity games with Netcode, Photon and Quantum, for
+              Mobile, PC and WebGL.</span></li>
+            <li><span class="tag">Unreal</span><span>Specialized in the Gameplay Ability System, the backbone
+              of abilities and effects.</span></li>
+            <li><span class="tag">Online</span><span>Multiplayer features wired to Firebase for authentication,
+              storage and real-time data.</span></li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJETOS (capítulo) ===================== -->
+  <section class="chapter" id="projetos">
+   <div class="wrap chapter-head">
+      <p class="chapter-eyebrow"><span lang="pt">Cinco projetos</span><span lang="en">Five projects</span></p>
+      <h2 class="chapter-title"><span lang="pt">Projetos</span><span lang="en">Projects</span></h2>
+      <p class="chapter-lead" lang="pt">Do protótipo feito em três dias ao multiplayer com página na Steam.
+        Em cada um você encontra o jogo em uma frase, os sistemas que eu escrevi e onde ver aquilo
+        funcionando.</p>
+      <p class="chapter-lead" lang="en">From a prototype built in three days to multiplayer games with a Steam
+        page. For each one: the game in a line, the systems I wrote, and where to see them running.</p>
+
+      <ol class="pindex">
+        <li><a href="#wyzards"><span class="n">01</span><span class="t">Wyzards</span><span class="d"><span lang="pt">Extração PvPvE multiplayer</span><span lang="en">Multiplayer PvPvE extraction</span></span></a></li>
+        <li><a href="#vontaris"><span class="n">02</span><span class="t">Vontaris</span><span class="d">Action RPG</span></a></li>
+        <li><a href="#wheel-stars"><span class="n">03</span><span class="t">Wheel Stars</span><span class="d"><span lang="pt">Corrida battle royale</span><span lang="en">Battle royale racing</span></span></a></li>
+        <li><a href="#plushies"><span class="n">04</span><span class="t">Save the Plushies</span><span class="d">Bubble shooter</span></a></li>
+        <li><a href="#eastville"><span class="n">05</span><span class="t">Among Eastville&rsquo;s Tree</span><span class="d"><span lang="pt">Mistério narrativo</span><span lang="en">Narrative mystery</span></span></a></li>
+      </ol>
+   </div>
+
+   <div class="wrap chapter-body">
+
+    <!-- ---------- WYZARDS ---------- -->
+    <article class="project" id="wyzards">
+      <div class="row">
+        <div class="rail"><div class="sub-mark sticky"><span class="n">01</span><p class="label">Wyzards</p></div></div>
+        <div>
+          <div class="p-head">
+            <h2>Wyzards</h2>
+            <span class="pill"><span lang="pt">Extração PvPvE multiplayer</span><span lang="en">Multiplayer PvPvE extraction</span></span>
+            <span class="pill live"><span lang="pt">Em desenvolvimento</span><span lang="en">In development</span></span>
+          </div>
+          <p class="kicker" lang="pt">Fiz o caminho do loot inteiro: do chão do mapa até o <b>stash que
+            continua lá</b> na próxima sessão.</p>
+          <p class="kicker" lang="en">I built the whole path of the loot: from the floor of the map to the
+            <b>stash that's still there</b> next session.</p>
+          <p class="pitch" lang="pt">Sobreviva a ambientes inóspitos e mantenha seu loot. Escolha um mago, monte
+            seu deck de habilidades com feitiços dos elementos da natureza e explore os mapas sozinho ou com
+            amigos. Entre no mapa, pegue o loot e saia vivo — ou perca tudo.</p>
+          <p class="pitch" lang="en">Survive hostile environments and keep your loot. Pick a wizard, build a deck
+            of spells drawn from the elements of nature and explore the maps solo or with friends. Get in, grab
+            the loot, get out alive — or lose everything.</p>
+
+          <div class="media">
+            <img class="shot" src="images/wyzards-banner.jpg" loading="lazy" decoding="async"
+                 width="1232" height="694" alt="Wyzards">
+          </div>
+
+          <div class="p-foot row">
+            <div class="rail">
+              <dl class="spec">
+                <div class="spec-row"><dt>Engine</dt><dd>Unreal Engine 5</dd></div>
+                <div class="spec-row"><dt>Backend</dt><dd>PlayFab</dd></div>
+                <div class="spec-row"><dt><span lang="pt">Função</span><span lang="en">Role</span></dt><dd><span lang="pt">Gameplay &amp; Backend</span><span lang="en">Gameplay &amp; backend</span></dd></div>
+              </dl>
+            </div>
+            <div class="contrib">
+              <h3><span lang="pt">Minha contribuição</span><span lang="en">What I built</span></h3>
+              <ul lang="pt">
+                <li><b>Sistema de itens em partida:</b> coleta, inventário da run e as regras que decidem o que o
+                  jogador leva embora ao extrair — ou perde ao morrer.</li>
+                <li><b>Stash e meta-progressão fora do jogo,</b> com o loot extraído persistindo entre sessões.</li>
+                <li><b>Criação de contas e autenticação,</b> integrando o cliente ao PlayFab como serviço de
+                  backend.</li>
+                <li><b>Gerenciamento do inventário no servidor,</b> mantendo cliente e backend em sincronia para
+                  que o progresso não dependa da máquina local.</li>
+                <li><b>Seleção de personagem e montagem do deck,</b> ligando a escolha do mago aos feitiços
+                  elementais disponíveis na partida.</li>
+              </ul>
+              <ul lang="en">
+                <li><b>In-match item system:</b> pickups, run inventory and the rules that decide what the player
+                  walks away with on extraction — or loses on death.</li>
+                <li><b>Out-of-match stash and meta progression,</b> with extracted loot persisting across
+                  sessions.</li>
+                <li><b>Account creation and authentication,</b> wiring the client to PlayFab as the backend
+                  service.</li>
+                <li><b>Server-side inventory management,</b> keeping client and backend in sync so progress never
+                  depends on the local machine.</li>
+                <li><b>Character select and ability deck building,</b> tying the chosen wizard to the elemental
+                  spells available in the match.</li>
+              </ul>
+              <div class="links">
+                <a href="https://store.steampowered.com/app/3536680/wYzards/" target="_blank" rel="noopener">
+                  <span lang="pt">Ver na Steam</span><span lang="en">View on Steam</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- VONTARIS ---------- -->
+    <article class="project" id="vontaris">
+      <div class="row">
+        <div class="rail"><div class="sub-mark sticky"><span class="n">02</span><p class="label">Vontaris</p></div></div>
+        <div>
+          <div class="p-head">
+            <h2>Vontaris</h2>
+            <span class="pill">Action RPG</span>
+            <span class="pill live"><span lang="pt">Em desenvolvimento</span><span lang="en">In development</span></span>
+          </div>
+          <p class="kicker" lang="pt">Habilidades, IA e hordas: fiz <b>tudo o que reage ao jogador</b> dentro
+            do combate.</p>
+          <p class="kicker" lang="en">Abilities, AI and hordes: I built <b>everything that reacts to the
+            player</b> in combat.</p>
+          <p class="quote" lang="pt">Kody é a guardiã da Lâmina Prodígio — e acaba acusada de matar o próprio
+            mestre. A única saída é fugir e reunir as provas da própria inocência.</p>
+          <p class="quote" lang="en">Kody is the guardian of the Prodigy Blade — and ends up accused of killing
+            her own master. Her only way out is to flee and gather the evidence of her innocence.</p>
+          <p class="pitch" lang="pt">Um action RPG em um planeta distante, com quatro personagens que se
+            desbloqueiam conforme a história avança. Cada um tem sua <b>Matriz de Habilidades</b>, onde o jogador
+            escolhe as passivas e as ativas da build; antes de entrar, define uma <b>Energia Elemental</b> e dois
+            artefatos.</p>
+          <p class="pitch" lang="en">An action RPG set on a distant planet, with four characters unlocked as the
+            story advances. Each one has its own <b>Ability Matrix</b>, where the player picks the passives and
+            actives of the build; before heading out, they choose an <b>Elemental Energy</b> and two
+            artifacts.</p>
+
+          <div class="media">
+            <!-- No GitHub Pages da para trocar este bloco pelo player embutido:
+                 <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/czkcpOWG494"
+                   title="Vontaris - gameplay" loading="lazy" allowfullscreen></iframe></div> -->
+            <figure class="clip">
+              <a class="poster" href="https://www.youtube.com/watch?v=czkcpOWG494"
+                 target="_blank" rel="noopener"
+                 aria-label="Assistir o gameplay de Vontaris no YouTube">
+                <img class="shot" src="images/vontaris-banner.jpg" loading="lazy" decoding="async"
+                     width="960" height="540" alt="Vontaris">
+                <span class="play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+                </span>
+              </a>
+              <figcaption><span lang="pt">Gameplay · YouTube</span><span lang="en">Gameplay · YouTube</span></figcaption>
+            </figure>
+            <div class="thumbs">
+              <img class="shot" src="images/vontaris-energia.jpg" loading="lazy" decoding="async"
+                   width="1200" height="676" alt="Vontaris — Energia Elemental">
+              <img class="shot" src="images/vontaris-icones.jpg" loading="lazy" decoding="async"
+                   width="1200" height="676" alt="Vontaris — ícones de habilidades">
+            </div>
+          </div>
+
+          <div class="p-foot row">
+            <div class="rail">
+              <dl class="spec">
+                <div class="spec-row"><dt>Engine</dt><dd>Unity</dd></div>
+                <div class="spec-row"><dt><span lang="pt">Gênero</span><span lang="en">Genre</span></dt><dd><span lang="pt">Action RPG single-player</span><span lang="en">Single-player action RPG</span></dd></div>
+                <div class="spec-row"><dt><span lang="pt">Função</span><span lang="en">Role</span></dt><dd>Gameplay Programmer</dd></div>
+              </dl>
+            </div>
+            <div class="contrib">
+              <h3><span lang="pt">Minha contribuição</span><span lang="en">What I built</span></h3>
+              <ul lang="pt">
+                <li><b>Sistema de habilidades que sustenta a Matriz:</b> ativas e passivas combináveis,
+                  diferentes para cada um dos quatro personagens jogáveis.</li>
+                <li><b>IA dos inimigos:</b> percepção do jogador, comportamento de combate e reação aos
+                  ataques.</li>
+                <li><b>Sistema de hordas por sala,</b> controlando as ondas, a composição dos inimigos e o ritmo
+                  de cada arena do mapa.</li>
+                <li><b>Energia Elemental e artefatos únicos,</b> incluindo os desbloqueios progressivos que mudam
+                  a build de uma partida para a outra.</li>
+              </ul>
+              <ul lang="en">
+                <li><b>The ability system behind the Matrix:</b> combinable actives and passives, distinct for
+                  each of the four playable characters.</li>
+                <li><b>Enemy AI:</b> player perception, combat behavior and reaction to attacks.</li>
+                <li><b>Room-by-room horde system,</b> driving wave count, enemy composition and the pacing of
+                  every arena on the map.</li>
+                <li><b>Elemental Energy and unique artifacts,</b> including the progressive unlocks that reshape
+                  the build from one run to the next.</li>
+              </ul>
+              <div class="links">
+                <a href="https://www.youtube.com/watch?v=czkcpOWG494" target="_blank" rel="noopener">
+                  <span lang="pt">Ver o gameplay no YouTube</span><span lang="en">Watch the gameplay on YouTube</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- WHEEL STARS ---------- -->
+    <article class="project" id="wheel-stars">
+      <div class="row">
+        <div class="rail"><div class="sub-mark sticky"><span class="n">03</span><p class="label">Wheel Stars</p></div></div>
+        <div>
+          <div class="p-head">
+            <h2>Wheel Stars</h2>
+            <span class="pill"><span lang="pt">Corrida battle royale</span><span lang="en">Battle royale racing</span></span>
+            <span class="pill"><span lang="pt">Fase inicial do projeto</span><span lang="en">Early project phase</span></span>
+          </div>
+          <p class="kicker" lang="pt">Entrei na fundação: o <b>sistema de rodadas</b> que organiza cada partida
+            multiplayer.</p>
+          <p class="kicker" lang="en">I came in at the foundation: the <b>round system</b> that organizes every
+            multiplayer match.</p>
+          <p class="pitch" lang="pt">Um novo universo de corrida: battle royale multijogador gratuito onde você
+            compete e coopera com seu esquadrão em competições que misturam velocidade e objetivos de equipe.</p>
+          <p class="pitch" lang="en">A new racing universe: a free multiplayer battle royale where you compete
+            and cooperate with your squad in events that mix raw speed with team objectives.</p>
+
+          <div class="media">
+            <img class="shot" src="images/wheel-banner.jpg" loading="lazy" decoding="async"
+                 width="800" height="450" alt="Wheel Stars">
+          </div>
+
+          <div class="p-foot row">
+            <div class="rail">
+              <dl class="spec">
+                <div class="spec-row"><dt>Engine</dt><dd>Unity</dd></div>
+                <div class="spec-row"><dt><span lang="pt">Modo</span><span lang="en">Mode</span></dt><dd><span lang="pt">Multiplayer online, em esquadrões</span><span lang="en">Online multiplayer, squad-based</span></dd></div>
+                <div class="spec-row"><dt><span lang="pt">Função</span><span lang="en">Role</span></dt><dd><span lang="pt">Gameplay Programmer (fase inicial)</span><span lang="en">Gameplay Programmer (early phase)</span></dd></div>
+              </dl>
+            </div>
+            <div class="contrib">
+              <h3><span lang="pt">Minha contribuição</span><span lang="en">What I built</span></h3>
+              <ul lang="pt">
+                <li><b>Sistema de rodadas,</b> que estrutura o fluxo de cada partida multiplayer: início,
+                  transição e encerramento de cada etapa da competição.</li>
+                <li><b>Modos de jogo,</b> entre eles o Capture the Flag, com as regras de pontuação e de objetivo
+                  por equipe.</li>
+              </ul>
+              <ul lang="en">
+                <li><b>Round system</b> structuring the flow of every multiplayer match: start, transition and
+                  close of each stage of the competition.</li>
+                <li><b>Game modes,</b> including Capture the Flag, with its scoring and team objective rules.</li>
+              </ul>
+              <div class="links">
+                <a href="https://store.steampowered.com/app/2250300/Wheel_Stars/" target="_blank" rel="noopener">
+                  <span lang="pt">Ver na Steam</span><span lang="en">View on Steam</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- SAVE THE PLUSHIES ---------- -->
+    <article class="project" id="plushies">
+      <div class="row">
+        <div class="rail"><div class="sub-mark sticky"><span class="n">04</span><p class="label">Save the Plushies</p></div></div>
+        <div>
+          <div class="p-head">
+            <h2>Save the Plushies</h2>
+            <span class="pill">Bubble shooter</span>
+            <span class="pill live"><span lang="pt">Publicado</span><span lang="en">Released</span></span>
+          </div>
+          <p class="kicker" lang="pt">Do disparo ao ranking: fiz o <b>match-3</b> e o placar online que faz a
+            fase valer a repetição.</p>
+          <p class="kicker" lang="en">From the shot to the leaderboard: I built the <b>match-3</b> and the
+            online scoring that makes a stage worth replaying.</p>
+          <p class="pitch" lang="pt">Um bubble shooter inspirado nas clássicas máquinas de pegar bichinhos de
+            pelúcia. Cada fase é um personagem jogável, com ilustração original e nome próprio — e um ranking
+            para disputar.</p>
+          <p class="pitch" lang="en">A bubble shooter inspired by classic plush claw machines. Every stage is a
+            playable character with original artwork and a name of its own — and a leaderboard to fight for.</p>
+
+          <div class="media">
+            <img class="shot" src="images/plushies-banner.jpg" loading="lazy" decoding="async"
+                 width="1595" height="898" alt="Save the Plushies">
+            <div class="thumbs">
+              <img class="shot" src="images/plushies-ingame.jpg" loading="lazy" decoding="async"
+                   width="1200" height="676" alt="Save the Plushies — partida em andamento">
+              <img class="shot" src="images/plushies-fases.jpg" loading="lazy" decoding="async"
+                   width="1200" height="676" alt="Save the Plushies — seleção de fases">
+            </div>
+          </div>
+
+          <div class="p-foot row">
+            <div class="rail">
+              <dl class="spec">
+                <div class="spec-row"><dt>Engine</dt><dd>Unity</dd></div>
+                <div class="spec-row"><dt>Backend</dt><dd>Firebase</dd></div>
+                <div class="spec-row"><dt><span lang="pt">Função</span><span lang="en">Role</span></dt><dd>Gameplay Programmer</dd></div>
+              </dl>
+            </div>
+            <div class="contrib">
+              <h3><span lang="pt">Minha contribuição</span><span lang="en">What I built</span></h3>
+              <ul lang="pt">
+                <li><b>Mecânica central de disparo e match-3:</b> trajetória do tiro, encaixe das bolinhas e
+                  resolução dos grupos de três ou mais.</li>
+                <li><b>Geração aleatória de fases</b> e spawn das bolinhas evoluindo conforme as tentativas do
+                  jogador, para que nenhuma partida repita a anterior.</li>
+                <li><b>Salvamento de progresso com Firebase,</b> sustentando um ranking de pontuação por
+                  fase.</li>
+              </ul>
+              <ul lang="en">
+                <li><b>Core shooting and match-3 mechanic:</b> shot trajectory, bubble snapping and resolution of
+                  groups of three or more.</li>
+                <li><b>Randomized stage generation</b> and bubble spawning that shifts with the player's
+                  attempts, so no two runs play the same.</li>
+                <li><b>Progress saving with Firebase,</b> backing a score leaderboard for each stage.</li>
+              </ul>
+              <div class="links">
+                <span class="soon"><span lang="pt">Em breve</span><span lang="en">Coming soon</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- EASTVILLE ---------- -->
+    <article class="project" id="eastville">
+      <div class="row">
+        <div class="rail"><div class="sub-mark sticky"><span class="n">05</span><p class="label">Eastville</p></div></div>
+        <div>
+          <div class="p-head">
+            <h2>Among Eastville&rsquo;s Tree</h2>
+            <span class="pill"><span lang="pt">Mistério narrativo</span><span lang="en">Narrative mystery</span></span>
+            <span class="pill jam"><span lang="pt">Mini Jam 103 · 3 dias</span><span lang="en">Mini Jam 103 · 3 days</span></span>
+          </div>
+          <p class="kicker" lang="pt">Narrativa ramificada e três finais, <b>escritos em código em 72
+            horas</b>.</p>
+          <p class="kicker" lang="en">Branching narrative and three endings, <b>written in code in 72
+            hours</b>.</p>
+          <p class="quote" lang="pt">Um adolescente é encontrado amarrado a uma árvore na floresta de Eastville.
+            Você é o detetive do caso. Interrogue, siga as pistas e decida como encerrar isso.</p>
+          <p class="quote" lang="en">A teenager is found tied to a tree in the woods outside Eastville. You are
+            the detective on the case. Interrogate, follow the clues and decide how this ends.</p>
+          <p class="pitch" lang="pt">Feito em três dias para a Mini Jam 103: Darkness. O jogador interroga o
+            adolescente e três suspeitos, e cada escolha alimenta um de três atributos ocultos — Sanidade,
+            Insanidade e Conhecimento. A soma final define qual dos três desfechos o caso recebe.</p>
+          <p class="pitch" lang="en">Built in three days for Mini Jam 103: Darkness. The player interrogates the
+            teenager and three suspects, and every choice feeds one of three hidden attributes — Sanity,
+            Insanity and Knowledge. The final tally decides which of the three endings the case gets.</p>
+
+          <div class="media">
+            <img class="shot" src="images/eat-banner.jpg" loading="lazy" decoding="async"
+                 width="1600" height="900" alt="Among Eastville's Tree">
+            <div class="thumbs">
+              <img class="shot" src="images/eat-personagem1.jpg" loading="lazy" decoding="async"
+                   width="1200" height="676" alt="Among Eastville's Tree — interrogatório">
+              <img class="shot" src="images/eat-personagem2.jpg" loading="lazy" decoding="async"
+                   width="1200" height="676" alt="Among Eastville's Tree — suspeito">
+            </div>
+          </div>
+
+          <div class="p-foot row">
+            <div class="rail">
+              <dl class="spec">
+                <div class="spec-row"><dt>Engine</dt><dd>Unity</dd></div>
+                <div class="spec-row"><dt><span lang="pt">Evento</span><span lang="en">Event</span></dt><dd>Mini Jam 103: Darkness</dd></div>
+                <div class="spec-row"><dt><span lang="pt">Duração</span><span lang="en">Duration</span></dt><dd><span lang="pt">3 dias</span><span lang="en">3 days</span></dd></div>
+                <div class="spec-row"><dt><span lang="pt">Função</span><span lang="en">Role</span></dt><dd>Gameplay Programmer</dd></div>
+              </dl>
+            </div>
+            <div class="contrib">
+              <h3><span lang="pt">Minha contribuição</span><span lang="en">What I built</span></h3>
+              <ul lang="pt">
+                <li><b>Sistema de narrativa ramificada,</b> conduzindo os interrogatórios com múltiplas escolhas
+                  e pistas que se acumulam.</li>
+                <li><b>Sistema de insanidade:</b> cada decisão pontua Sanidade, Insanidade ou Conhecimento, e o
+                  placar final seleciona um dos três desfechos possíveis.</li>
+                <li><b>Escopo de jam:</b> sistemas projetados para nascer, funcionar e ser fechados em 72
+                  horas.</li>
+              </ul>
+              <ul lang="en">
+                <li><b>Branching narrative system</b> driving the interrogations through multiple choices and
+                  clues that stack up.</li>
+                <li><b>Insanity system:</b> every decision scores Sanity, Insanity or Knowledge, and the final
+                  tally selects one of three possible endings.</li>
+                <li><b>Jam scope:</b> systems designed to be born, work and ship inside 72 hours.</li>
+              </ul>
+              <div class="links">
+                <a href="https://strike-um.itch.io/among-eastvilles-trees" target="_blank" rel="noopener">
+                  <span lang="pt">Jogar na itch.io</span><span lang="en">Play on itch.io</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+   </div>
+  </section>
+
+  <!-- ===================== COMPETENCIAS ===================== -->
+  <section class="wrap band" id="competencias">
+    <div class="row">
+      <div class="rail"><p class="label sticky"><span lang="pt">Competências</span><span lang="en">Skills</span></p></div>
+      <div class="stack">
+        <div class="stack-group">
+          <h3><span lang="pt">Engines e ferramentas</span><span lang="en">Engines &amp; tools</span></h3>
+          <div class="chips">
+            <span>Unity — Netcode</span><span>Unity — Photon</span><span>Unity — Quantum</span>
+            <span>Unreal Engine 5 — GAS</span><span>Blueprints</span><span>PlayFab</span>
+            <span>Firebase</span><span>Git &amp; GitHub</span><span>Visual Studio</span>
+            <span>Rider</span><span>Figma</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3><span lang="pt">Linguagens</span><span lang="en">Programming languages</span></h3>
+          <div class="chips">
+            <span>C++</span><span>C#</span><span>C</span><span>JavaScript</span><span>SQL</span><span>Python</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3><span lang="pt">Plataformas</span><span lang="en">Platforms</span></h3>
+          <div class="chips"><span>PC</span><span>Mobile</span><span>WebGL</span></div>
+        </div>
+        <div class="stack-group">
+          <h3><span lang="pt">Sistemas que eu implemento</span><span lang="en">Systems I build</span></h3>
+          <div class="sys">
+            <div>
+              <h4 lang="pt">Habilidades e progressão</h4>
+              <h4 lang="en">Abilities &amp; progression</h4>
+              <p lang="pt">GAS, ativas e passivas combináveis, experiência, níveis e atributos de personagem.</p>
+              <p lang="en">GAS, combinable actives and passives, experience, levels and character attributes.</p>
+            </div>
+            <div>
+              <h4 lang="pt">Multiplayer e backend</h4>
+              <h4 lang="en">Multiplayer &amp; backend</h4>
+              <p lang="pt">Contas, banco de dados de jogadores, inventário no servidor e dados em tempo real.</p>
+              <p lang="en">Accounts, player databases, server-side inventory and real-time data.</p>
+            </div>
+            <div>
+              <h4 lang="pt">Itens e economia</h4>
+              <h4 lang="en">Items &amp; economy</h4>
+              <p lang="pt">Inventário em grade, loot de partida, stash persistente e desbloqueios.</p>
+              <p lang="en">Grid-based inventory, run loot, persistent stash and unlocks.</p>
+            </div>
+            <div>
+              <h4 lang="pt">IA e ritmo de combate</h4>
+              <h4 lang="en">AI &amp; combat pacing</h4>
+              <p lang="pt">Percepção, comportamento de inimigos e ondas controladas por arena.</p>
+              <p lang="en">Perception, enemy behavior and per-arena wave control.</p>
+            </div>
+            <div>
+              <h4 lang="pt">Narrativa ramificada</h4>
+              <h4 lang="en">Branching narrative</h4>
+              <p lang="pt">Diálogo com múltiplas escolhas, atributos ocultos e múltiplos finais.</p>
+              <p lang="en">Multiple-choice dialogue, hidden attributes and multiple endings.</p>
+            </div>
+            <div>
+              <h4 lang="pt">QA e pipeline</h4>
+              <h4 lang="en">QA &amp; pipeline</h4>
+              <p lang="pt">Testes automatizados de backend e de engine, pipelines de teste de build.</p>
+              <p lang="en">Automated backend and in-engine tests, build test pipelines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FORMACAO ===================== -->
+  <section class="wrap band" id="formacao">
+    <div class="row">
+      <div class="rail"><p class="label sticky"><span lang="pt">Formação</span><span lang="en">Education</span></p></div>
+      <div class="entries">
+        <article class="entry">
+          <h3 lang="pt">Desenvolvimento de Jogos Digitais</h3>
+          <h3 lang="en">Digital Games Development</h3>
+          <p class="org">UMC — Campus Mogi das Cruzes <span class="when">01/2019 — 07/2021</span></p>
+          <p class="note" lang="pt">Curso técnico em desenvolvimento de jogos digitais.</p>
+          <p class="note" lang="en">Technical degree in digital game development.</p>
+        </article>
+        <article class="entry">
+          <h3 lang="pt">Técnico em Eletrônica</h3>
+          <h3 lang="en">Electronics Technician</h3>
+          <p class="org">Colégio Técnico Antonio Teixeira Fernandes — Univap, São José dos Campos <span class="when">2012 — 2014</span></p>
+          <p class="note" lang="pt">Curso técnico em eletrônica.</p>
+          <p class="note" lang="en">Technical course in electronics.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO ===================== -->
+  <section class="wrap contact" id="contato">
+    <div class="row">
+      <div class="rail"><p class="label"><span lang="pt">Contato</span><span lang="en">Contact</span></p></div>
+      <div>
+        <h2 lang="pt">Vamos conversar</h2>
+        <h2 lang="en">Let's talk</h2>
+        <p lang="pt">Estou em busca de uma vaga como Game Programmer em um time colaborativo. Se quiser ver
+          algum destes sistemas por dentro, eu mostro o código e explico as decisões por trás dele.</p>
+        <p lang="en">I'm looking for a Game Programmer role on a collaborative team. If you want to see any of
+          these systems from the inside, I'll walk you through the code and the decisions behind it.</p>
+        <div class="cta">
+          <a class="btn key" href="mailto:felipepsaxton@gmail.com">felipepsaxton@gmail.com</a>
+          <a class="btn" href="https://www.linkedin.com/in/felipe-saxton-856857141/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/nikitosxt" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <p class="fine">Felipe Prianti Saxton · Game Programmer · 2026</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+  <div class="lb-top">
+    <span class="lb-count" id="lb-count"></span>
+    <button type="button" class="lb-btn" id="lb-close">
+      <span lang="pt">Fechar &times;</span><span lang="en">Close &times;</span>
+    </button>
+  </div>
+  <div class="lb-stage"><img id="lb-img" src="" alt=""></div>
+  <div>
+    <p class="lb-cap" id="lb-cap"></p>
+    <div class="lb-nav">
+      <button type="button" class="lb-btn" id="lb-prev">&larr; <span lang="pt">Anterior</span><span lang="en">Previous</span></button>
+      <button type="button" class="lb-btn" id="lb-next"><span lang="pt">Próxima</span><span lang="en">Next</span> &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll("[data-lang-btn]");
+
+    function setLang(lang) {
+      var en = lang === "en";
+      root.classList.toggle("lang-en", en);
+      root.setAttribute("lang", en ? "en" : "pt-BR");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].setAttribute("aria-pressed", String(buttons[i].dataset.langBtn === (en ? "en" : "pt")));
+      }
+      try { localStorage.setItem("portfolio-lang", en ? "en" : "pt"); } catch (e) {}
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", function () { setLang(this.dataset.langBtn); });
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem("portfolio-lang"); } catch (e) {}
+    if (saved === "en") { setLang("en"); }
+
+    /* destaca no menu a secao que esta na tela */
+    var links = document.querySelectorAll(".nav a[href^='#']");
+    var map = {};
+    var targets = [];
+    for (var j = 0; j < links.length; j++) {
+      var el = document.getElementById(links[j].getAttribute("href").slice(1));
+      if (el) { map[el.id] = links[j]; targets.push(el); }
+    }
+    if ("IntersectionObserver" in window && targets.length) {
+      var seen = {};
+      var observer = new IntersectionObserver(function (entries) {
+        for (var k = 0; k < entries.length; k++) {
+          seen[entries[k].target.id] = entries[k].isIntersecting;
+        }
+        var active = null;
+        for (var m = 0; m < targets.length; m++) {
+          if (seen[targets[m].id]) { active = targets[m].id; break; }
+        }
+        for (var id in map) { map[id].classList.toggle("current", id === active); }
+      }, { rootMargin: "-25% 0px -60% 0px" });
+      for (var n = 0; n < targets.length; n++) { observer.observe(targets[n]); }
+    }
+  })();
+
+  /* ============ VISUALIZACAO AMPLIADA DA IMAGEM ============ */
+  (function () {
+    var box = document.getElementById("lightbox");
+    if (!box) return;
+
+    var big = document.getElementById("lb-img");
+    var cap = document.getElementById("lb-cap");
+    var count = document.getElementById("lb-count");
+    var btnClose = document.getElementById("lb-close");
+    var btnPrev = document.getElementById("lb-prev");
+    var btnNext = document.getElementById("lb-next");
+
+    /* toda imagem de projeto entra na galeria, menos o poster do video */
+    var shots = [];
+    var all = document.querySelectorAll("img.shot");
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].closest(".poster")) continue;
+      all[i].classList.add("zoomable");
+      all[i].setAttribute("role", "button");
+      all[i].setAttribute("tabindex", "0");
+      shots.push(all[i]);
+    }
+    if (!shots.length) { return; }
+
+    var at = 0;
+    var lastFocus = null;
+
+    function show(i) {
+      at = (i + shots.length) % shots.length;
+      var src = shots[at];
+      big.src = src.currentSrc || src.src;
+      big.alt = src.alt || "";
+      cap.textContent = src.alt || "";
+      count.textContent = (at + 1) + " / " + shots.length;
+    }
+
+    function open(i) {
+      lastFocus = document.activeElement;
+      show(i);
+      box.hidden = false;
+      document.documentElement.classList.add("lb-open");
+      btnClose.focus();
+    }
+
+    function close() {
+      box.hidden = true;
+      document.documentElement.classList.remove("lb-open");
+      big.src = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    for (var j = 0; j < shots.length; j++) {
+      (function (index) {
+        shots[index].addEventListener("click", function () { open(index); });
+        shots[index].addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+            e.preventDefault();
+            open(index);
+          }
+        });
+      })(j);
+    }
+
+    btnClose.addEventListener("click", close);
+    btnPrev.addEventListener("click", function () { show(at - 1); });
+    btnNext.addEventListener("click", function () { show(at + 1); });
+
+    /* clicar no fundo fecha; clicar na imagem ou nos botoes, nao */
+    box.addEventListener("click", function (e) {
+      if (e.target === box || e.target.classList.contains("lb-stage")) close();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (box.hidden) return;
+      if (e.key === "Escape") { close(); }
+      else if (e.key === "ArrowLeft") { show(at - 1); }
+      else if (e.key === "ArrowRight") { show(at + 1); }
+      else if (e.key === "Tab") {
+        /* mantem o foco dentro da janela enquanto ela esta aberta */
+        var f = [btnClose, btnPrev, btnNext];
+        var pos = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(pos + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
+    });
+  })();
+
+  /* ============ ENTRADA DOS BLOCOS AO ROLAR ============ */
+  (function () {
+    var root = document.documentElement;
+    var bar = document.querySelector(".progress");
+    var reduce = false;
+    try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+
+    /* --- barra de progresso --- */
+    function drawProgress() {
+      if (!bar) return;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var p = h > 0 ? Math.min(1, Math.max(0, y / h)) : 0;
+      bar.style.transform = "scaleX(" + p + ")";
+    }
+
+    var SEL = [
+      ".band h2.sec", ".band .prose",
+      ".entry h3", ".entry .org", ".entry li", ".entry .note",
+      ".stack-group h3", ".chips span", ".sys div",
+      ".project .p-head h2", ".project .p-head .pill",
+      ".project .kicker", ".project .quote", ".project .pitch",
+      ".media > .shot", ".media > .clip", ".thumbs .shot",
+      ".spec-row", ".contrib h3", ".contrib li", ".contrib .links",
+      ".contact h2", ".contact p", ".contact .cta",
+      ".chapter-eyebrow", ".chapter-title", ".chapter-lead", ".pindex li",
+      ".label.sticky", ".sub-mark"
+    ].join(",");
+
+    var waiting = [];
+    var projects = [];
+    var scrolled = false;
+
+    function reveal(el) {
+      if (el && !el.classList.contains("is-in")) el.classList.add("is-in");
+    }
+
+    /* mostra tudo que ja alcancou a area visivel */
+    function sweep() {
+      var limit = window.innerHeight * 0.92;
+      var i;
+      for (i = 0; i < waiting.length; i++) {
+        var el = waiting[i];
+        if (el.classList.contains("is-in")) continue;
+        var r = el.getBoundingClientRect();
+        if (r.top < limit && r.bottom > -80) reveal(el);
+      }
+      for (i = 0; i < projects.length; i++) {
+        var p = projects[i];
+        if (p.classList.contains("is-in")) continue;
+        if (p.getBoundingClientRect().top < window.innerHeight * 0.85) reveal(p);
+      }
+    }
+
+    var pending = false;
+    function onScroll() {
+      scrolled = true;
+      drawProgress();
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(function () { pending = false; sweep(); });
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    drawProgress();
+
+    if (reduce) return;
+
+    /* ---- prepara so o que esta abaixo da dobra ---- */
+    var nodes = document.querySelectorAll(SEL);
+    var fold = window.innerHeight * 0.92;
+
+    function variant(el) {
+      if (el.matches(".spec-row, .contrib h3, .label.sticky, .sub-mark, .pindex li, .entry .org, .stack-group h3")) return "rv-x";
+      if (el.matches(".pill, .chips span")) return "rv-s";
+      if (el.matches(".p-head h2")) return "rv-title";
+      if (el.matches(".shot, .clip")) return "rv-shot";
+      return "";
+    }
+
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (el.closest(".hero")) continue;
+      var r = el.getBoundingClientRect();
+      if (!r.height && !r.width) continue;   /* escondido pelo idioma */
+      if (r.top < fold) continue;            /* ja visivel: nunca some */
+
+      /* atraso em cascata conforme a posicao entre os irmaos */
+      var step = 0, prev = el.previousElementSibling;
+      while (prev) {
+        if (prev.matches(SEL)) step++;
+        prev = prev.previousElementSibling;
+      }
+      el.style.transitionDelay = (Math.min(step, 7) * 75) + "ms";
+
+      var v = variant(el);
+      el.classList.add("rv");
+      if (v) el.classList.add(v);
+      waiting.push(el);
+    }
+
+    if (!waiting.length) return;             /* pagina nao rola aqui: fica estatica */
+
+    root.classList.add("anim-on");
+
+    var allProjects = document.querySelectorAll(".project");
+    for (var j = 0; j < allProjects.length; j++) {
+      if (allProjects[j].getBoundingClientRect().top >= fold) projects.push(allProjects[j]);
+      else reveal(allProjects[j]);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        for (var k = 0; k < entries.length; k++) {
+          if (entries[k].isIntersecting) { reveal(entries[k].target); io.unobserve(entries[k].target); }
+        }
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+      for (var m = 0; m < waiting.length; m++) io.observe(waiting[m]);
+      for (var n = 0; n < projects.length; n++) io.observe(projects[n]);
+    }
+
+    /* redes de seguranca */
+    window.addEventListener("load", function () { setTimeout(sweep, 300); });
+    setTimeout(function () {
+      if (!scrolled) sweep();
+    }, 1500);
+    setTimeout(function () {
+      if (!scrolled) { for (var i = 0; i < waiting.length; i++) reveal(waiting[i]); for (var j = 0; j < projects.length; j++) reveal(projects[j]); }
+    }, 7000);
+
+    /* ao trocar de idioma, nada pode ficar invisivel */
+    var langButtons = document.querySelectorAll("[data-lang-btn]");
+    for (var q = 0; q < langButtons.length; q++) {
+      langButtons[q].addEventListener("click", function () { setTimeout(sweep, 30); });
+    }
+  })();
+</script>
+</body>
+</html>
